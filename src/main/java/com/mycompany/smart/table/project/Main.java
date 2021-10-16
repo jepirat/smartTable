@@ -18,12 +18,12 @@ import java.util.logging.Logger;
  *
  * @author jeka
  */
-public class main extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame {
     Controller controller;
     /**
      * Creates new form main
      */
-    public main() throws SerialPortException, IOException, ClassNotFoundException {
+    public Main() throws SerialPortException, IOException, ClassNotFoundException {
         this.controller = new Controller();
         initComponents();
         jComboBox1.removeAllItems();
@@ -132,11 +132,11 @@ public class main extends javax.swing.JFrame {
            }
             
         } catch (ModbusIOException ex) {
-            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ModbusProtocolException ex) {
-            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ModbusNumberException ex) {
-            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
      
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -153,7 +153,7 @@ public class main extends javax.swing.JFrame {
         try {
             properties.saveProperty("port", jComboBox1.getSelectedItem().toString());
         } catch (IOException ex) {
-            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -168,11 +168,11 @@ public class main extends javax.swing.JFrame {
                jButton2.setText("Лампа отключена");
            }
         } catch (ModbusIOException ex) {
-            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ModbusProtocolException ex) {
-            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ModbusNumberException ex) {
-            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -193,27 +193,30 @@ public class main extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new main().setVisible(true);
+                    new Main().setVisible(true);
                 } catch (SerialPortException ex) {
-                    Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
