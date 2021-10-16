@@ -5,7 +5,11 @@
  */
 package com.mycompany.smart.table.project;
 
+import com.intelligt.modbus.jlibmodbus.exception.ModbusIOException;
+import com.intelligt.modbus.jlibmodbus.exception.ModbusNumberException;
+import com.intelligt.modbus.jlibmodbus.exception.ModbusProtocolException;
 import com.intelligt.modbus.jlibmodbus.serial.SerialPortException;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,9 +23,10 @@ public class main extends javax.swing.JFrame {
     /**
      * Creates new form main
      */
-    public main() throws SerialPortException {
+    public main() throws SerialPortException, IOException, ClassNotFoundException {
         this.controller = new Controller();
         initComponents();
+        jComboBox1.removeAllItems();
     }
 
     /**
@@ -49,6 +54,11 @@ public class main extends javax.swing.JFrame {
         });
 
         jButton2.setText("Включить свет");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -111,7 +121,23 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        try {
+           boolean turbine = controller.turbineOnOf();
+           if (turbine == true) {
+               jButton1.setBackground(Color.GRAY);
+               jButton1.setText("Турбина включена");
+           } else {
+               jButton1.setBackground(Color.YELLOW);
+               jButton1.setText("Турбина отключена");
+           }
+            
+        } catch (ModbusIOException ex) {
+            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ModbusProtocolException ex) {
+            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ModbusNumberException ex) {
+            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        }
      
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -130,6 +156,25 @@ public class main extends javax.swing.JFrame {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+          boolean lamp = controller.lampeOnOf();
+          if (lamp == true) {
+               jButton2.setBackground(Color.GRAY);
+               jButton2.setText("Лампа включена");
+           } else {
+               jButton2.setBackground(Color.YELLOW);
+               jButton2.setText("Лампа отключена");
+           }
+        } catch (ModbusIOException ex) {
+            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ModbusProtocolException ex) {
+            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ModbusNumberException ex) {
+            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,6 +209,10 @@ public class main extends javax.swing.JFrame {
                 try {
                     new main().setVisible(true);
                 } catch (SerialPortException ex) {
+                    Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
                     Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

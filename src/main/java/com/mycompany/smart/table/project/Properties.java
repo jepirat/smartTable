@@ -5,6 +5,7 @@
  */
 package com.mycompany.smart.table.project;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,14 +39,26 @@ public class Properties {
         if(!file.exists()) {
             file.createNewFile();
         }
+        try {
         FileInputStream fileInputStream = new FileInputStream(file);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         this.properties = (HashMap) objectInputStream.readObject();
+        } catch (EOFException e) {
+            System.out.println(e.getStackTrace() + "Достигнут конец файла");
+        }
        
     } 
     
     public String getProperty(String key) {
-       return this.properties.get(key);
+        String port = "Программа еще не настроена, выберите порт, затем сохраните и перезагрузите программу";
+        try {
+          port = properties.get(key);
+        }
+        
+        catch(NullPointerException e) {
+            System.out.println("Программа еще не настроена, выберите порт, затем сохраните и перезагрузите программу");
+        }
+        return port;
     }
     
     

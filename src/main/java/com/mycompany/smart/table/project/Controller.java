@@ -15,6 +15,7 @@ import com.intelligt.modbus.jlibmodbus.serial.SerialPort;
 import com.intelligt.modbus.jlibmodbus.serial.SerialPortException;
 import com.intelligt.modbus.jlibmodbus.serial.SerialPortFactoryJSSC;
 import com.intelligt.modbus.jlibmodbus.serial.SerialUtils;
+import java.io.IOException;
 import jssc.SerialPortList;
 
 /**
@@ -22,19 +23,21 @@ import jssc.SerialPortList;
  * @author jeka
  */
 public class Controller {
-    boolean turbine, lamp;
+    private boolean turbine, lamp;
     SerialParameters serialParameters = new SerialParameters();
-    Properties properties = new Properties();
+    Properties properties;
     ModbusMaster modbusMaster;
 
-    public Controller() throws SerialPortException {
+    public Controller() throws SerialPortException, IOException, ClassNotFoundException {
+        properties = new Properties();
+        properties.readProperties();
         serialParameters.setDevice(properties.getProperty("port"));
         serialParameters.setBaudRate(SerialPort.BaudRate.BAUD_RATE_9600);
         serialParameters.setDataBits(8);
         serialParameters.setParity(SerialPort.Parity.NONE);
         serialParameters.setStopBits(1);
         SerialUtils.setSerialPortFactory(new SerialPortFactoryJSSC());
-        ModbusMasterFactory.createModbusMasterRTU(serialParameters);
+        modbusMaster = ModbusMasterFactory.createModbusMasterRTU(serialParameters);   
     }
     
     
@@ -42,25 +45,29 @@ public class Controller {
         return SerialPortList.getPortNames();  
     }  
     
-    public void turbineOnOf() throws ModbusIOException, ModbusProtocolException, ModbusNumberException {
+    public boolean turbineOnOf() throws ModbusIOException, ModbusProtocolException, ModbusNumberException {
         modbusMaster.connect();
         if (turbine == false) {
             turbine = true;
             modbusMaster.writeSingleCoil(2, 0, true);              
-        } if (turbine == true) {
+        } else if (turbine == true) {
            turbine = false;
             modbusMaster.writeSingleCoil(2, 0, false); 
         }
+        modbusMaster.disconnect();
+        return turbine;
     }
     
-    public void lampeOnOf() throws ModbusIOException, ModbusProtocolException, ModbusNumberException {
+    public boolean lampeOnOf() throws ModbusIOException, ModbusProtocolException, ModbusNumberException {
         modbusMaster.connect();
         if (lamp == false) {
             lamp = true;
             modbusMaster.writeSingleCoil(2, 1, true);              
-        } if (lamp == true) {
+        } else if (lamp == true) {
            lamp = false;
            modbusMaster.writeSingleCoil(2, 1, false); 
         }
+        modbusMaster.disconnect();
+        return lamp;
     }
 }
