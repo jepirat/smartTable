@@ -70,4 +70,15 @@ public class Controller {
         modbusMaster.disconnect();
         return lamp;
     }
+    
+    public void refreshPorerties() throws IOException, ClassNotFoundException, SerialPortException {
+        properties.readProperties();
+        serialParameters.setDevice(properties.getProperty("port"));
+        serialParameters.setBaudRate(SerialPort.BaudRate.BAUD_RATE_9600);
+        serialParameters.setDataBits(8);
+        serialParameters.setParity(SerialPort.Parity.NONE);
+        serialParameters.setStopBits(1);
+        SerialUtils.setSerialPortFactory(new SerialPortFactoryJSSC());
+        modbusMaster = ModbusMasterFactory.createModbusMasterRTU(serialParameters);
+    }
 }

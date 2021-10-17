@@ -29,6 +29,7 @@ public class Properties {
         
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
            Map<String, String> properties = new HashMap();
+           properties.clear();
            properties.put(key, value);
            oos.writeObject(properties);
         } 
@@ -60,6 +61,4 @@ public class Properties {
         }
         return port;
     }
-    
-    
 }
